@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<title>RegistrationApp</title>
+
+
+<body ng-controller="MainController">
+
+<h1>Registration</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <form ng-submit="submitForm()">
+                <h2>Register</h2>
+                <div class="group">
+                    <input type="text" name="firstName" ng-model="firstName" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>First name</label>
+                </div>
+
+                <div class="group">
+                    <input type="text" name="lastName" ng-model="lastName" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Last name</label>
+                </div>
+
+                <div class="group">
+                    <input type="{{inputType}}" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" name="dateOfbirth" ng-model="dateOfBirth" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Date of birth</label>
+                </div>
+
+
+                <div class="group">
+                    <input type="text" name="username" ng-model="username" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Username</label>
+                </div>
+                <div class="group">
+                    <input type="password" name="password" ng-model="password" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Password</label>
+                </div>
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                    Submit
+                </button>
+            </form>
+
+        </div>
+        <div class="col-md-6">
+            <h2>Registrations</h2>
+            <div style="overflow: auto; height:60vh">
+            <table class="table" >
+                <tr>
+                    <th>#</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Date of birth</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="registration in allRegistrations">
+                    <td><b>{{$index +1}}</b></td>
+                    <td id="{{registration.id}}FN">{{registration.firstName}}</td>
+                    <td id="{{registration.id}}LN">{{registration.lastName}}</td>
+                    <td>{{timeConverter(registration.dateOfBirth)}}</td>
+                    <td id="{{registration.id}}UN">{{registration.username}}</td>
+                    <td id="{{registration.id}}PW">{{registration.password}}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" id="deleteButton" value="{{registration.id}}"
+                                ng-click="removeRegistration($event)">
+                            Delete
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="modifyButton" value="{{registration.id}}"
+                                ng-click="open($event)">
+                            Modify
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div modal="showModal" close="cancel()">
+    <div class="modal-header" style="background:white">
+        <h2>Change entry</h2>
+    </div>
+    <div class="modal-body" style="background:white">
+        <br>
+
+        <div class="group">
+            <input type="text" name="neFfirstName" ng-model="newFirstName" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>First name</label>
+        </div>
+
+        <div class="group">
+            <input type="text" name="newLastName" ng-model="newLastName" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Last name</label>
+        </div>
+
+
+        <div class="group">
+            <input type="text" name="newUsername" ng-model="newUsername" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Username</label>
+        </div>
+        <div class="group">
+            <input type="text" name="newPassword" ng-model="newPassword" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Password</label>
+        </div>
+        <button class="btn btn-success" ng-click="ok()">Update</button>
+
+        <div class="modal-footer" style="background:white">
+
+            <button class="btn" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+
+</div>
+<script src="js/app.js"></script>
+<script src="js/angular-ui-bootstrap-modal.js"></script>
+
+
+<!-- Controllers -->
+<script src="js/MainController.js"></script>
+</body>
